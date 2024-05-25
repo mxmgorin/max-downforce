@@ -1,8 +1,6 @@
 -- Max Downforce - modules/controls.lua
 -- 2019-2020 Foppygames
 
-love.joystick.loadGamepadMappings("gamecontrollerdb.txt")
-	
 local controls = {}
 
 -- =========================================================
@@ -12,17 +10,17 @@ local controls = {}
 controls.KEYBOARD = 1
 controls.GAMEPAD = 2
 
-controls.KEYBOARD_LABEL = "arrow keys"
+controls.KEYBOARD_LABEL = "digital"
 controls.KEYBOARD_LABEL_DX = 0
-controls.KEYBOARD_START_TEXT = "Press space to start"
+controls.KEYBOARD_START_TEXT = "Press Start"
 controls.KEYBOARD_START_TEXT_DX = 0
 
-controls.GAMEPAD_LABEL = "gamepad"
+controls.GAMEPAD_LABEL = "analog"
 controls.GAMEPAD_LABEL_DX = 8
-controls.GAMEPAD_START_TEXT = "Press A to start"
+controls.GAMEPAD_START_TEXT = "Press Start"
 controls.GAMEPAD_START_TEXT_DX = 14
 
-controls.GAMEPAD_X_DEADZONE = 0.04
+controls.GAMEPAD_X_DEADZONE = 0.06
 
 controls.GAMEPAD_MODE_R = 1
 controls.GAMEPAD_MODE_L = 2
@@ -58,16 +56,6 @@ function controls.init()
 	controls.selectedIndex = 0
 	controls.selected = nil
 
-	-- keyboard is assumed available
-	table.insert(controls.available,{
-		type = controls.KEYBOARD,
-		label = controls.KEYBOARD_LABEL,
-		labelDx = controls.KEYBOARD_LABEL_DX,
-		startText = controls.KEYBOARD_START_TEXT,
-		startTextDx = controls.KEYBOARD_START_TEXT_DX,
-		mode = nil
-	})
-
 	-- joysticks were detected
 	if (love.joystick.getJoystickCount() > 0) then
 		local joysticks = love.joystick.getJoysticks()
@@ -88,7 +76,7 @@ function controls.init()
 				labelDx = controls.GAMEPAD_LABEL_DX,
 				startText = controls.GAMEPAD_START_TEXT,
 				startTextDx = controls.GAMEPAD_START_TEXT_DX,
-				mode = controls.GAMEPAD_MODE_R
+				mode = controls.GAMEPAD_MODE_L
 			})
 			table.insert(controls.available,{
 				type = controls.GAMEPAD,
@@ -96,10 +84,20 @@ function controls.init()
 				labelDx = controls.GAMEPAD_LABEL_DX,
 				startText = controls.GAMEPAD_START_TEXT,
 				startTextDx = controls.GAMEPAD_START_TEXT_DX,
-				mode = controls.GAMEPAD_MODE_L
+				mode = controls.GAMEPAD_MODE_R
 			})
 		end
 	end
+
+	-- keyboard is assumed available
+	table.insert(controls.available,{
+		type = controls.KEYBOARD,
+		label = controls.KEYBOARD_LABEL,
+		labelDx = controls.KEYBOARD_LABEL_DX,
+		startText = controls.KEYBOARD_START_TEXT,
+		startTextDx = controls.KEYBOARD_START_TEXT_DX,
+		mode = nil
+	})
 
 	if (#controls.available > 0) then
 		-- previously selected type is known

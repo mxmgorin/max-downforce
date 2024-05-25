@@ -207,14 +207,14 @@ local function drawTitleScreen()
 	love.graphics.print(sound.MUSIC_CREDITS,sound.MUSIC_CREDITS_X,65)
 	
 	love.graphics.setColor(0.470,0.902,1)
-	love.graphics.print("T = track "..tracks.getSelectedTrackNumber().."/"..tracks.getTrackCount()..": "..tracks.getSelectedTrackName(),93,90)
-	love.graphics.print("W = windowed / full screen",93,105)
-	love.graphics.print("M = music: "..sound.getMusicEnabledLabel(),93,120)
+	--love.graphics.print("W = windowed / full screen",93,90)
+	love.graphics.print("Y = track "..tracks.getSelectedTrackNumber().."/"..tracks.getTrackCount()..": "..tracks.getSelectedTrackName(), 93,105)
+	love.graphics.print("Select+X = music: "..sound.getMusicEnabledLabel(),93,120)
 
 	-- more than one control method available
 	if (controls.getAvailableCount() > 1) then
 		love.graphics.setColor(0.470,0.902,1)
-		love.graphics.print("C = controls: "..controls.getSelected().label,93,135)
+		love.graphics.print("X = controls: "..controls.getSelected().label,93,135)
 	-- one control method available (note: assuming there is never less than one)
 	else
 		love.graphics.setColor(1,1,1)
@@ -691,23 +691,7 @@ function states.updateKeyPressed(key)
 end
 
 function states.updateGamepadPressed(joystick,button)
-	if (joystick == selectedJoystick) then
-		if (state == STATE_TITLE) then
-			if ((button == "a") or (button == "start")) then
-				switchToState(STATE_RACE)
-			end
-		end
-		if (state == STATE_RACE) then
-			if (button == "back") then
-				switchToState(STATE_TITLE)
-			end
-		end
-		if (state == STATE_GAME_OVER) then
-			if ((button == "a") or (button == "start")) then
-				switchToState(STATE_TITLE)
-			end
-		end
-	end
+	-- for quit and start the gptk will be used
 end
 
 function states.draw()
